@@ -172,7 +172,7 @@ function App() {
           status: "planned",
           duration_minutes: "",
           calories: "",
-          steps_count: "",
+          steps_count: 1222,
           date: new Date().toISOString().split("T")[0],
         });
         // fetchActivities();
@@ -536,22 +536,6 @@ function App() {
                     })
                   }
                 />
-
-                {activityForm.activity_type === "steps" && (
-                  <input
-                    type="number"
-                    placeholder="Steps Count"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 outline-none"
-                    value={activityForm.steps_count}
-                    onChange={(e) =>
-                      setActivityForm({
-                        ...activityForm,
-                        steps_count: e.target.value,
-                      })
-                    }
-                    required
-                  />
-                )}
 
                 <button
                   type="submit"
