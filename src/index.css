@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "react-datepicker/dist/react-datepicker.css";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
