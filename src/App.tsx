@@ -139,7 +139,7 @@ function App() {
   const fetchActivities = async (authToken: any) => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/auth/activities/`, {
+      const response = await fetch(`${API_URL}/activities/`, {
         headers: { Authorization: `Token ${authToken || token}` },
       });
       const data = await response.json();
@@ -154,7 +154,7 @@ function App() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/auth/activities/`, {
+      const response = await fetch(`${API_URL}/activities/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
