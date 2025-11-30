@@ -21,7 +21,10 @@ function App() {
   const [view, setView] = useState("login");
   const [activities, setActivities] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  const [deletePrompt, setDeletePrompt] = useState<any>(null);
+  const [deletePrompt, setDeletePrompt] = useState<{
+    show: boolean;
+    activityId: any;
+  }>({ show: false, activityId: null });
 
   const [loginForm, setLoginForm] = useState({ username: "", password: "" });
   const [registerForm, setRegisterForm] = useState({
