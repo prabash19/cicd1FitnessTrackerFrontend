@@ -21,6 +21,7 @@ function App() {
   const [view, setView] = useState("login");
   const [activities, setActivities] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+  const [deletePrompt, setDeletePrompt] = useState<any>(null);
 
   const [loginForm, setLoginForm] = useState({ username: "", password: "" });
   const [registerForm, setRegisterForm] = useState({
@@ -196,8 +197,6 @@ function App() {
   };
 
   const handleDeleteActivity = async (id: any) => {
-    if (!window.confirm("Delete this activity?")) return;
-
     try {
       const response = await fetch(`${API_URL}/activities/${id}/`, {
         method: "DELETE",
@@ -207,6 +206,7 @@ function App() {
       if (response.ok || response.status === 204) {
         toast.success("Activity deleted!");
         fetchActivities(token);
+        setDeletePrompt({ show: false, activityId: null });
       }
     } catch (err) {
       toast.error("Delete failed");
@@ -412,6 +412,38 @@ function App() {
         pauseOnHover
         theme="light"
       />
+
+      {/* Custom Delete Confirmation Modal */}
+      {deletePrompt.show && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Delete Activity
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete this activity? This action cannot
+              be undone.
+            </p>
+            <div className="flex space-x-3 justify-end">
+              <button
+                onClick={() =>
+                  setDeletePrompt({ show: false, activityId: null })
+                }
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDeleteActivity(deletePrompt.activityId)}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="min-h-screen bg-gray-50">
         <nav className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -645,7 +677,12 @@ function App() {
                           </button>
                           <div className="flex-1"></div>
                           <button
-                            onClick={() => handleDeleteActivity(activity.id)}
+                            onClick={() =>
+                              setDeletePrompt({
+                                show: true,
+                                activityId: activity.id,
+                              })
+                            }
                             className="px-3 py-1 bg-red-100 text-red-800 rounded text-sm hover:bg-red-200 transition flex items-center"
                           >
                             <Trash2 className="w-4 h-4 mr-1" />
